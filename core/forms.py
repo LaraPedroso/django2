@@ -1,7 +1,9 @@
 from django import forms
 from django.core.mail import EmailMessage
 
+from .models import Produto
 
+# formulario comum, não ligado a nenhum modelo do bando de dados.
 class ContatoForm(forms.Form):
     nome = forms.CharField(label='Nome', max_length=100)
     email = forms.EmailField(label='Email', max_length=100)
@@ -25,3 +27,10 @@ class ContatoForm(forms.Form):
             headers={'Reply-To': email}
         )
         email_message.send()
+
+
+# formulario que se baseia em um modelo do django - classe models.Model
+class ProdutoModelForm(forms.ModelForm):
+    class Meta:
+        model = Produto
+        fields = ['nome', 'preco', 'estoque', 'imagem']

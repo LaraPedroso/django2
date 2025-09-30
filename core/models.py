@@ -9,9 +9,9 @@ from django.template.defaultfilters import slugify
 # ao rodar makemigrations e migrate, django cria essa tabela no bd
 
 class Base(models.Model):
-    criado = models.DateField('Data de Criação', auto_now_add=True)
-    modificado = models.DateField('Data de Atualização', auto_now=True)
-    ativo = models.DateField('Ativo?', default=True)
+    criado = models.DateTimeField('Data de Criação', auto_now_add=True)
+    modificado = models.DateTimeField('Data de Atualização', auto_now=True)
+    ativo = models.BooleanField('Ativo?', default=True)
 
 # abstract = True: significa que essa tabela não será criada no banco.
     class Meta:
@@ -19,8 +19,8 @@ class Base(models.Model):
 
 class Produto(Base):
     nome = models.CharField('Nome', max_length=100)
-    preco = models.CharField('Preço', max_length=100)
-    estoque = models.CharField('Estoque', max_length=100)
+    preco = models.DecimalField('Preço', max_digits=10, decimal_places=2)  
+    estoque = models.IntegerField('Estoque')  
     imagem = StdImageField('Image', upload_to='produtos', variations={'thumb': (124, 124)})
     slug = models.SlugField('Slug', max_length=100, blank=True, editable=False)
 
