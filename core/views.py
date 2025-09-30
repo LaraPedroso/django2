@@ -5,6 +5,9 @@ from .forms import ContatoForm, ProdutoModelForm
 from .models import Produto
 
 def index(request):
+
+    # Retorna todos os registros da tabela Produto
+    # Produto.objects.all() = SELECT * FROM produto;
     context = {
         'produtos': Produto.objects.all()
     }
@@ -32,13 +35,7 @@ def produto(request):
         form = ProdutoModelForm(request.POST, request.FILES)
         if form.is_valid():
             # commit= cria o objeto mas não salva no banco ainda
-            prod = form.save()
-
-            print(f'Nome: {prod.nome}')
-            print(f'Preço: {prod.preco}')
-            print(f'Estoque: {prod.estoque}')
-            print(f'Imagem: {prod.imagem}')
-
+            form.save()
             messages.success(request, 'Produto salvo com sucesso')
             form = ProdutoModelForm()
         else : 
